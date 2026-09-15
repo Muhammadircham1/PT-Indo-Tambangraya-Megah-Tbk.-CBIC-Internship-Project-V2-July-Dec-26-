@@ -1,0 +1,53 @@
+from PyQt6 import QtCore, QtGui, QtWidgets
+
+
+class Ui_Dialog(object):
+    def setupUi(self, Dialog):
+        Dialog.setObjectName("Dialog")
+        Dialog.resize(480, 400)
+        Dialog.setMinimumSize(QtCore.QSize(480, 400))
+        Dialog.setMaximumSize(QtCore.QSize(480, 400))
+        Dialog.setWindowIcon(QtGui.QIcon("assets/logo.jpg"))
+        self.setWindowTitle("Data Confirmation")
+        self.label = QtWidgets.QLabel(parent=Dialog)
+        self.label.setGeometry(QtCore.QRect(30, 20, 421, 21))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(15)
+        font.setBold(True)
+        self.label.setFont(font)
+        self.label.setObjectName("label")
+        self.btn_send = QtWidgets.QPushButton(parent=Dialog)
+        self.btn_send.setGeometry(QtCore.QRect(270, 350, 91, 31))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(12)
+        font.setBold(True)
+        self.btn_send.setFont(font)
+        self.btn_send.setObjectName("btn_send")
+        self.btn_cancel = QtWidgets.QPushButton(parent=Dialog)
+        self.btn_cancel.setGeometry(QtCore.QRect(130, 350, 91, 31))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(12)
+        font.setBold(True)
+        self.btn_cancel.setFont(font)
+        self.btn_cancel.setObjectName("btn_cancel")
+        self.textEdit_popup = QtWidgets.QTextEdit(parent=Dialog)
+        self.textEdit_popup.setGeometry(QtCore.QRect(30, 70, 421, 251))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(12)
+        font.setBold(True)
+        self.textEdit_popup.setFont(font)
+        self.textEdit_popup.setObjectName("textEdit_popup")
+
+        self.retranslateUi(Dialog)
+        QtCore.QMetaObject.connectSlotsByName(Dialog)
+
+    def retranslateUi(self, Dialog):
+        _translate = QtCore.QCoreApplication.translate
+        Dialog.setWindowTitle(_translate("Dialog", "Data Confirmation"))
+        self.label.setText(_translate("Dialog", "Please check if the data is correct?"))
+        self.btn_send.setText(_translate("Dialog", "OK"))
+        self.btn_cancel.setText(_translate("Dialog", "Cancel"))

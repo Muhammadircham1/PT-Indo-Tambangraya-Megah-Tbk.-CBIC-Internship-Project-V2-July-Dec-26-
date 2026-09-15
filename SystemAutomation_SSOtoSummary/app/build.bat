@@ -1,0 +1,36 @@
+@echo off
+title Build EXE with PyInstaller
+echo ==========================================
+echo Building EXE from main.py ...
+echo ==========================================
+
+REM Masuk ke direktori app
+cd /d "%~dp0"
+
+REM Hapus folder build & dist lama
+rmdir /s /q build
+rmdir /s /q dist
+del main.spec
+
+REM Jalankan PyInstaller
+python -m PyInstaller ^
+    --noconfirm ^
+    --clean ^
+    --onefile ^
+    --windowed ^
+    --exclude-module PyQt5 ^
+    --icon=assets\SSO_Logo.ico ^
+    --name "SSO Automation" ^
+    --add-data "assets;assets" ^
+    --add-data "style;style" ^
+    --add-data "config;config" ^
+    --hidden-import "gui" ^
+    --hidden-import "logic" ^
+    --hidden-import "utils" ^
+    main.py
+
+echo ==========================================
+echo Build Selesai!
+echo File EXE ada di: dist\SSO Automation.exe
+echo ==========================================
+pause

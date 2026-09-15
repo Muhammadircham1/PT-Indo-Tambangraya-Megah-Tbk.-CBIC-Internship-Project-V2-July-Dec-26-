@@ -1,0 +1,332 @@
+# main_logic.py
+from config.column_mapping import column_mapping
+from .auto_separator import get_formula_separator
+from .move_sheet import copy_sheet_full
+from .fill_empty_with_zero import fill_empty_range_with_zero
+from .backup_restore_plan import backup_plan_rows, restore_plan_rows, clear_aon_block
+from .backup_restore_quality import backup_complete_quality_rows, restore_complete_quality_rows, backup_plan_quality_rows, restore_plan_quality_rows, clear_plan_fill
+from .helpers import month_to_abbreviation, get_header_columns_a, normalize_month_block_rows, delete_or_clear_plan_rows, insert_boct_formulas, insert_mahakam_formulas
+from .renumber_blocks import renumber_month_blocks
+from .data_handler import process_data_per_month
+from .apply_color_font import apply_status_font
+from .month_block_finder import find_month_block
+from .dem_rate_backup import backup_dem_rate, restore_dem_rate
+from .fpg_backup import backup_fpg, restore_fpg
+from .delete_temp_sheet import delete_backup_sheets
+from .backup_restore_fill import backup_fill_by_status, restore_fill_by_status
+from .formatting import clear_cell_fill
+from .cross_year_handler import handle_cross_year_december
+
+import openpyxl
+
+sep = get_formula_separator()
+# 📌 Column mapping formula → pattern (can be expanded as needed)
+formulas={
+    # 'B': f"=ROW()-ROW($B${sort_start})+1", # nomor urut otomatis
+    'BJ': '=IFERROR(SUM(N{row}:BI{row}),"NULL")',
+    'BO': '=(SUMIF($N$892:$BI$892,D{row},N{row}:BI{row}))/BJ{row}',
+    'AKK': '=(AOH{row}/BJ{row})*-1',
+    'ANO': f'=IFERROR(BJ{{row}}/AOA{{row}}{sep}0)',
+    'ANQ': '=J{row}',
+    'ANS': '=ANQ{row}+(ANR{row}/24)',
+    'ANT': '=K{row}',
+    'ANU': '=L{row}',
+    'ANX': '=BJ{row}',
+    'AOA': '=(ANU{row}-ANT{row})*24',
+    'AOB': '=(ANT{row}-ANS{row})*24',
+    'AOC': '=(ANU{row}-ANS{row})*24',
+    'AOD': f'=IF(BS{{row}}="Stevedore"{sep}10000{sep}IF(BS{{row}}="Stevedore 1"{sep}10000{sep}IF(BS{{row}}="Stevedore 2"{sep}10000{sep}IF(BS{{row}}="Stevedore 3"{sep}10000{sep}IF(BS{{row}}="FC Pioneer Satu"{sep}15000{sep}IF(BS{{row}}="StevedoreGrab"{sep}12000{sep}IF(H{{row}}="BoCT"{sep}40000{sep}IF(H{{row}}="Muara Berau"{sep}25000{sep}IF(H{{row}}="Muara Jawa"{sep}25000{sep}IF(H{{row}}="GPK Port"{sep}10000{sep}IF(H{{row}}="Bunyut"{sep}25000{sep}IF(H{{row}}="Jorong"{sep}7000{sep}IF(H{{row}}="JBG Anc"{sep}10000{sep}0)))))))))))))', 
+    'AOE': '=(BJ{row}/AOD{row})*24',
+    'AOF': '=(AOC{row}-AOE{row})/24',
+    'AOH': '=AOF{row}*AOG{row}',
+    'AOI': '=AOF{row}*-1',
+    'AOJ': '=AOG{row}/2',
+    'AOK': '=AOH{row}/2',
+    'AOW': '=AOV{row}*BJ{row}',
+    'AOX': '=AKC{row}*BJ{row}',
+    'AOY': '=AOW{row}+AOX{row}',
+    'AOZ': '=AKK{row}*BJ{row}',
+    'APC': f'=-IF($H{{row}}="BoCT"{sep}IF($D{{row}}="EBP"{sep}3*BJ{{row}}{sep}0){sep}IF($H{{row}}="Muara Berau"{sep}IF($BO{{row}}=100%{sep}BJ{{row}}*_xlfn.XLOOKUP($BS{{row}}{sep}\'Loading Facilities\'!$D:$D{sep}\'Loading Facilities\'!$E:$E{sep}0){sep}BJ{{row}}*_xlfn.XLOOKUP($BS{{row}}{sep}\'Loading Facilities\'!$D:$D{sep}\'Loading Facilities\'!$F:$F{sep}0)){sep}0))',
+    'APD': f'=-IF(D{{row}}="GPK"{sep}8%*BJ{{row}}*MAX(INDEX(HBA!$E:$E{sep}MATCH(APL{{row}}{sep}HBA!$B:$B{sep}0)){sep}AOV{{row}}){sep}IF(D{{row}}="EBP"{sep}0{sep}13.5%*BJ{{row}}*MAX(INDEX(HBA!$E:$E{sep}MATCH(APL{{row}}{sep}HBA!$B:$B{sep}0)){sep}AOV{{row}})))',
+    'APE': f'=-IF(D{{row}}="EBP"{sep}0.4%*(AOV{{row}}*BJ{{row}}){sep}0)',
+    'APF': f'=-IF(D{{row}}="EBP"{sep}0.13*BJ{{row}}{sep}0)',
+    'APG': '=AOZ{row}+APC{row}+APE{row}+APF{row}',
+    'APH': f'=IFERROR(APG{{row}}/BJ{{row}}{sep}0)',
+    'API': '=AOY{row}+APG{row}',
+    'APJ': f'=IFERROR(API{{row}}/BJ{{row}}{sep}0)',
+    'APL': f'=IF(CB{{row}}>6000{sep}"HBA"{sep}IF(CB{{row}}>5300{sep}"HBA I"{sep}IF(CB{{row}}>3400{sep}"HBA II"{sep}"HBA III")))'
+}
+
+def run_excel_process(input_file: str, output_file: str, month_start: int, month_end: int | None) -> str:
+    """
+    Main function to process the Excel file.
+
+    Processing steps:
+    1. Copy the "Loading" sheet from the output SSO file to the input file (Summary).
+    2. Read the header and column mapping from the "Loading" sheet.
+    3. Iterate over each row of data by month, ensuring:
+       - The month value is valid (integer).
+       - The same month is not processed more than once.
+    4. Process the data for each month via `process_data_per_month`.
+    5. Save the final result to the Excel file.
+
+    Args:
+        input_file (str): Path to the source Excel file (summary).
+        output_file (str): Path to the destination Excel file (SSO output).
+        mohth_start (int): Starting month for processing.
+        month_end (int | None): Ending month for processing (optional).
+
+    Returns:
+        str: Success message after the process is completed.
+    """
+
+    # Step 1: Copy the new “Loading” sheet to the source, name it “Loading2”
+    print(f"🟢 Starting Copy Sheet Loading Process...")
+    copy_sheet_full(input_file, output_file, sheet_name="Loading", new_name="Loading2")
+
+    # Step 2: Open the input_file (summary) workbook in the ‘Loading’ sheet to fill in the empty cells in the blending column → 0
+    print(f"\n🟡 Open Workbook {input_file} to fill empty cell in sheet 'Loading' with 0")
+    wb = openpyxl.load_workbook(input_file)
+    wb_value = openpyxl.load_workbook(input_file, data_only=True)
+
+    for target_sheet in ["Loading", "Loading2"]:
+        if target_sheet in wb.sheetnames:
+            print(f"🟢 Sheet '{target_sheet}' found. Filling empty cells in column range O:AY start from row 2...")
+            fill_empty_range_with_zero(wb[target_sheet], check_col="A", start_col="O", end_col="AY", start_row=2)
+        else:
+            print(f"⚠️ Sheet '{target_sheet}' not found, skipped.")
+
+    # Decide sheet_a [Loading]
+    sheet_a = wb["Loading"] if "Loading" in wb.sheetnames else wb["Loading2"]
+
+    # Load ITM Summary early  & sheet_c [ITM Summary (Value Only)]
+    if "ITM Summary" not in wb.sheetnames:
+        raise ValueError("Sheet 'ITM Summary' tidak ditemukan!")
+    sheet_b = wb["ITM Summary"]
+    sheet_c = wb_value["ITM Summary"]
+
+    # Get header columns
+    header_columns_a = get_header_columns_a(sheet_a, column_mapping)
+
+    if month_end is None or month_end == month_start:
+        valid_months = {month_start}
+    elif month_end > month_start:
+        valid_months = set(range(month_start, month_end + 1))
+    else:
+        # Cross-year (Dec → Jan)
+        valid_months = set(range(month_start, 13)) | set(range(1, month_end + 1))
+
+    print(f"📌 Valid months to process: {valid_months}")
+
+    # Get all unique months from sheet_a
+    all_months = set()
+    for r in range(2, sheet_a.max_row + 1):
+        val = sheet_a.cell(row=r, column=header_columns_a["Month"]).value
+        if isinstance(val, int):
+            all_months.add(val)
+
+    if not all_months:
+        raise ValueError("No valid month values found in the Loading/Loading2 sheet!")
+
+    print(f"📌 Found a unique month in the Loading sheet: {sorted(all_months)}")
+
+    # Backup range for each month that appears, to be used later during restore 
+    backup_ranges_dem_rate = []
+    backup_ranges_fpg = []
+
+    print(f"💾 Save changes to {input_file}...")
+    wb.save(input_file)
+
+    print(f"\n🟡 Open the 'ITM Summary' sheet as the destination sheet for the process results...")
+    sheet_b = wb['ITM Summary']
+
+    # Step 3: Take the old sheet (Loading) if available
+    if 'Loading' in wb.sheetnames:
+        sheet_loading_old = wb['Loading']
+        print("🟢 Old sheet 'Loading' found.")
+    else:
+        sheet_loading_old = None
+        print("🟡 Old sheet 'Loading' not found.")
+
+    sheet_loading_new = wb['Loading2']
+    print("🟢 Sheet 'Loading2' found & ready to use.")
+
+    backup_data = {}
+
+    if sheet_loading_old:
+        print("🟡 Old sheet 'Loading' found, doing backup plan rows...")
+        backup_plan_rows(wb, sheet_b)
+        print("\n🟡 Doing backup Quality, SOS Month, Remark of Penalty's Cause, Remark Demurrage's Cause, and Remark column in status 'Complete/Loading/In Progress' and 'Plan' rows (if exist) ...")
+        backup_complete_quality_rows(wb, sheet_b)
+        backup_plan_quality_rows(wb, sheet_b)
+        delete_backup_sheets(wb, sheet_names=("dem_plan", "dem_complete"))
+        print(f"\n🟡 Backing up demurrage rates for all monthly blocks...")
+        for month_value in sorted(all_months):
+            start_row, end_row = find_month_block(sheet_b, month_value)
+
+            if not start_row or not end_row:
+                print(f"⚠️ Month Block {month_value} Not found in ITM Summary, skipped.")
+                continue
+
+            print(f"\n🔒 Backup Demurrage Rate → Month {month_value}: Row {start_row}–{end_row}")
+            backup_dem_rate(sheet_b, "dem_plan", "dem_complete", start_row, end_row)
+
+            # Save range for later restore
+            backup_ranges_dem_rate.append((month_value, start_row, end_row))
+        delete_backup_sheets(wb, sheet_names=("FPG_plan", "FPG_comp"))
+        print(f"\n🟡 Backing up Actual Free Pratique Granted (FPG)) for all monthly blocks...")
+        for month_value in sorted(all_months):
+            start_row, end_row = find_month_block(sheet_b, month_value)
+
+            if not start_row or not end_row:
+                print(f"⚠️ Month Block {month_value} Not found in ITM Summary, skipped.")
+                continue
+
+            print(f"\n🔒 Backup FPG Actual Value → Month {month_value}: Row {start_row}–{end_row}")
+            backup_fpg(sheet_b, "FPG_plan", "FPG_comp", start_row, end_row)
+
+            # Save range for later restore
+            backup_ranges_fpg.append((month_value, start_row, end_row))
+        backup_data = backup_fill_by_status(sheet_b)
+        clear_cell_fill(wb, sheet_b)
+        print("\n🟡 Doing delete or clean plan rows...")
+        delete_or_clear_plan_rows(sheet_b, column_mapping, target_months=valid_months)
+
+        # --- Step: Normalization month block to 100 ---
+        print("🟡 Normalization of the month block to 100 after deleting plan rows...")
+        month_blocks = renumber_month_blocks(sheet_b)
+        normalize_month_block_rows(sheet_b, month_blocks, reference_col=2, renumber_func=renumber_month_blocks)
+
+        #Delete sheet old 'Loading'
+        print("🗑️ Delete the old ‘Loading’ sheet...")
+        wb.remove(sheet_loading_old)
+    else:
+        # If there is no old sheet 'loading', still perform a backup
+        print("🟡 The old ‘Loading’ sheet is missing. Continue to back up plan rows....")
+        backup_plan_rows(wb, sheet_b)
+        print(f"\n🟡 Doing backup Quality, SOS Month, Remark of Penalty's Cause, Remark Demurrage's Cause, and Remark column in status 'Complete/Loading/In Progress' and 'Plan' rows (if exist) ...")
+        backup_complete_quality_rows(wb, sheet_b)
+        backup_plan_quality_rows(wb, sheet_b)
+        delete_backup_sheets(wb, sheet_names=("dem_plan", "dem_complete"))
+        print(f"\n🟡 Backing up demurrage rates for all monthly blocks...")
+        for month_value in sorted(all_months):
+            start_row, end_row = find_month_block(sheet_b, month_value)
+
+            if not start_row or not end_row:
+                print(f"⚠️ Month Block {month_value} Not found in ITM Summary, skipped.")
+                continue
+
+            print(f"🔒 Backup Demurrage Rate → Month {month_value}: Row {start_row}–{end_row}")
+            backup_dem_rate(sheet_b, "dem_plan", "dem_complete", start_row, end_row)
+
+            # Save range for later restore
+            backup_ranges_dem_rate.append((month_value, start_row, end_row))
+        delete_backup_sheets(wb, sheet_names=("FPG_plan", "FPG_comp"))
+        print(f"\n🟡 Backing up Actual Free Pratique Granted (FPG)) for all monthly blocks...")
+        for month_value in sorted(all_months):
+            start_row, end_row = find_month_block(sheet_b, month_value)
+
+            if not start_row or not end_row:
+                print(f"⚠️ Month Block {month_value} Not found in ITM Summary, skipped.")
+                continue
+
+            print(f"\n🔒 Backup FPG Actual Value → Month {month_value}: Row {start_row}–{end_row}")
+            backup_fpg(sheet_b, "FPG_plan", "FPG_comp", start_row, end_row)
+
+            # Save range for later restore
+            backup_ranges_fpg.append((month_value, start_row, end_row))
+        backup_data = backup_fill_by_status(sheet_b)
+        clear_cell_fill(wb, sheet_b)
+        print("🟡 Doing delete or clean plan rows...")
+        delete_or_clear_plan_rows(sheet_b, column_mapping, target_months=valid_months)
+
+        # --- Step: Normalization month block to 100 ---
+        print("🟡 Normalization of the month block to 100 after deleting plan rows...")
+        month_blocks = renumber_month_blocks(sheet_b)
+        normalize_month_block_rows(sheet_b, month_blocks, reference_col=2, renumber_func=renumber_month_blocks)
+
+    # rename Loading2 → Loading
+    print("✒️ Rename sheet 'Loading2' to 'Loading'...")
+    sheet_loading_new.title = "Loading"
+    sheet_a = wb['Loading']
+
+    # Get column positions based on defined mapping
+    print("🟡 Reading column headers from the ‘Loading’ sheet...")
+    header_columns_a = get_header_columns_a(sheet_a, column_mapping)
+
+    # A set to track already processed months (to avoid duplicates)
+    processed_months = set()
+
+    cross_year_handled = handle_cross_year_december(sheet_a=sheet_a, sheet_b=sheet_b, sheet_c=sheet_c, valid_months=valid_months, header_columns_a=header_columns_a, column_mapping=column_mapping, month_to_abbreviation=month_to_abbreviation, process_data_per_month=process_data_per_month)
+
+    # Step 5: Iterate through each row in the source sheet
+    print("\n🟡 Start iterate every row in sheet 'Loading'...")
+    for row in range(2, sheet_a.max_row + 1):  # Start from row 2 (skip header)
+        month_value = sheet_a.cell(row=row, column=header_columns_a['Month']).value
+
+        # Validate the month value: must be an integer and not already processed
+        if not isinstance(month_value, int):
+            print(f"[WARNING] Row {row}: Nilai bulan tidak valid ({month_value}), dilewati.")
+            continue
+        # Skip December if already handled by cross-year logic
+        if cross_year_handled and month_value == 12:
+            continue
+        if month_value in processed_months:
+            print(f"🟡 Row {row}: Bulan {month_value} sudah diproses, dilewati.")
+            continue
+
+        # Mark this month as processed
+        processed_months.add(month_value)
+
+        # Convert numeric month to abbreviation (e.g., 1 -> Jan)
+        month_abbreviation = month_to_abbreviation(month_value)
+        print(f"🟡 Row {row}: Memproses data bulan {month_value} ({month_abbreviation})...")
+
+        # Step: Process data for this month
+        process_data_per_month(
+            sheet_a, sheet_b, sheet_c, month_value,
+            month_abbreviation, header_columns_a, column_mapping
+        )
+
+        # After the monthly process, perform renumbering to refresh month_block and add formulas.
+        print("🟢 Refresh Month_Block after all Process & Normalization...")
+        month_blocks = renumber_month_blocks(sheet_b)
+        print("✒️ Adding the BoCT formula (AKC & AKK) for each monthly block...")
+        insert_boct_formulas(sheet_b, month_blocks, reference_col=2, loadport_col="H")
+        print("✒️ Adding the Mahakam formula (AKC & AKK) for each monthly block...")
+        insert_mahakam_formulas(sheet_b, month_blocks, reference_col=2, loadport_col="H")
+        print(f"🟢 Data in Month {month_value} ({month_abbreviation}) Finished Processing.")
+
+    print("🟡 Restore plan rows after processing all months...")
+    clear_aon_block(sheet_b)
+    restore_plan_rows(wb, sheet_b)
+    clear_plan_fill(wb, sheet_b)
+    restore_complete_quality_rows(wb, sheet_b)
+    restore_plan_quality_rows(wb, sheet_b)
+    print(f"\n 🟢 Restoring demurrage rates for all monthly blocks...")
+    for month_value, start_row, end_row in backup_ranges_dem_rate:
+        start_row, end_row = find_month_block(sheet_b, month_value)
+        if not start_row or not end_row:
+            print(f"⚠️ Month Block {month_value} Not found in ITM Summary during restore, skipped.")
+            continue
+        print(f"🔄 Restore Dem Rate → Month {month_value}: Row {start_row}–{end_row}")
+        restore_dem_rate(sheet_b, "dem_plan", "dem_complete", start_row, end_row)
+    print(f"\n 🟢 Restoring FPG Actual Value for all monthly blocks...")
+
+    for month_value, start_row, end_row in backup_ranges_fpg:
+        start_row, end_row = find_month_block(sheet_b, month_value)
+        if not start_row or not end_row:
+            print(f"⚠️ Month Block {month_value} Not found in ITM Summary during restore, skipped.")
+            continue
+        print(f"🔄 Restore FPG Actual Value → Month {month_value}: Row {start_row}–{end_row}")
+        restore_fpg(sheet_b, "FPG_plan", "FPG_comp", start_row, end_row)
+    apply_status_font(sheet_b)
+    delete_backup_sheets(wb, sheet_names=("dem_plan", "dem_complete"))
+    delete_backup_sheets(wb, sheet_names=("FPG_plan", "FPG_comp"))
+    restore_fill_by_status(sheet_b, backup_data)
+    print(f"✅ Restore finished & backup sheet was Deleted\n")
+
+    # Step 5: Save the result back to the input file (final output)
+    print(f"💾 Save the final result to a file {input_file}...")
+    wb.save(input_file)
+    return f" ✅ Automation Complete! Data Copied and Saved to 💾 {input_file}"

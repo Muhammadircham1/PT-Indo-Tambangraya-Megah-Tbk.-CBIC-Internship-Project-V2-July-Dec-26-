@@ -1,0 +1,889 @@
+{
+    "file": {
+        "IMM": "D:/magang/daily/September/11 Sep/IMM Operation Performance 2026_New .xlsm",
+        "TCM": "D:/magang/daily/September/11 Sep/9_TCM & TIS Production Report as 10 September 2026.xlsx",
+        "BEK": "D:/magang/daily/September/11 Sep/10. BEK Production Report as of Sep 10th, 2026.xlsx",
+        "GPK": "D:/magang/daily/September/11 Sep/GPK Daily Report September 10, 2026.xlsx",
+        "JBG": "D:/magang/daily/September/11 Sep/JBG Daily Report Sep 10th' 2026.xlsx",
+        "TIS": "D:/magang/daily/September/11 Sep/9_TCM & TIS Production Report as 10 September 2026.xlsx",
+        "SUM": "D:/magang/daily/September/11 Sep/SUM_QUALITY 11 Sept.xlsm",
+        "Output": "D:/magang/ITMG-Internship-All-Project-2025/automation-daily-production-report/Dashboard/data/draft/Draft_Daily.xlsx",
+        "Summary": "D:/magang/daily/September/11 Sep/14 September_Margin.xlsx"
+    },
+    "date": {
+        "main_key": "BEK",
+        "source_sheet": "Dashboard",
+        "source_cell": "E5",
+        "target_sheet": "Daily Production Report",
+        "target_range": "B2-B15"
+    },
+    "IMM": {
+        "IMM WB HCV LS": {
+            "FC Production": {
+                "Daily": [
+                    {
+                        "source_sheet": "sum_PSY",
+                        "source_cell": "D44",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "E2"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "summary production RTH IMM",
+                        "source_cell": "B41",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "F2"
+                    }
+                ]
+            },
+            "Port Stock Yard": {
+                "Daily": [
+                    {
+                        "source_sheet": "sum_PSY",
+                        "source_cell": "C44",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "G2"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "sum_PSY",
+                        "source_cell": "C44",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "H2"
+                    }
+                ]
+            },
+            "Coal Winning": {
+                "Daily": [
+                    {
+                        "source_sheet": "Pivot Dashboard",
+                        "source_cell": "J58",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "I2"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Pivot Dashboard",
+                        "source_cell": "K58",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "J2"
+                    }
+                ]
+            },
+            "ROM Stock": {
+                "MTD": [
+                    {
+                        "source_sheet": "Pivot Dashboard",
+                        "source_cell": "AK1111+AK1112",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "K2"
+                    }
+                ]
+            }
+        },
+        "IMM WB HCV HS": {
+            "FC Production": {
+                "Daily": [
+                    {
+                        "source_sheet": "sum_PSY",
+                        "source_cell": "D45",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "E3"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "summary production RTH IMM",
+                        "source_cell": "C41",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "F3"
+                    }
+                ]
+            },
+            "Port Stock Yard": {
+                "Daily": [
+                    {
+                        "source_sheet": "sum_PSY",
+                        "source_cell": "C45",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "G3"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "sum_PSY",
+                        "source_cell": "C45",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "H3"
+                    }
+                ]
+            },
+            "Coal Winning": {
+                "Daily": [
+                    {
+                        "source_sheet": "Pivot Dashboard",
+                        "source_cell": "J58",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "I2"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Pivot Dashboard",
+                        "source_cell": "K58",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "J2"
+                    }
+                ]
+            }
+        },
+        "IMM EB MCV LS": {
+            "FC Production": {
+                "Daily": [
+                    {
+                        "source_sheet": "sum_PSY",
+                        "source_cell": "D46",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "E4"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "summary production RTH IMM",
+                        "source_cell": "D41",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "F4"
+                    }
+                ]
+            },
+            "Port Stock Yard": {
+                "Daily": [
+                    {
+                        "source_sheet": "sum_PSY",
+                        "source_cell": "C46",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "G4"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "sum_PSY",
+                        "source_cell": "C46",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "H4"
+                    }
+                ]
+            },
+            "Coal Winning": {
+                "Daily": [
+                    {
+                        "source_sheet": "Pivot Dashboard",
+                        "source_cell": "J58",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "I2"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Pivot Dashboard",
+                        "source_cell": "K58",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "J2"
+                    }
+                ]
+            }
+        },
+        "IMM EB HCV MS": {
+            "FC Production": {
+                "Daily": [
+                    {
+                        "source_sheet": "sum_PSY",
+                        "source_cell": "D47",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "E5"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "summary production RTH IMM",
+                        "source_cell": "E41",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "F5"
+                    }
+                ]
+            },
+            "Port Stock Yard": {
+                "Daily": [
+                    {
+                        "source_sheet": "sum_PSY",
+                        "source_cell": "C47",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "G5"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "sum_PSY",
+                        "source_cell": "C47",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "H5"
+                    }
+                ]
+            },
+            "Coal Winning": {
+                "Daily": [
+                    {
+                        "source_sheet": "Pivot Dashboard",
+                        "source_cell": "J58",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "I2"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Pivot Dashboard",
+                        "source_cell": "K58",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "J2"
+                    }
+                ]
+            }
+        },
+        "IMM EB HCV HS": {
+            "FC Production": {
+                "Daily": [
+                    {
+                        "source_sheet": "sum_PSY",
+                        "source_cell": "D48",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "E6"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "summary production RTH IMM",
+                        "source_cell": "F41",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "F6"
+                    }
+                ]
+            },
+            "Port Stock Yard": {
+                "Daily": [
+                    {
+                        "source_sheet": "sum_PSY",
+                        "source_cell": "C48",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "G6"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "sum_PSY",
+                        "source_cell": "C48",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "H6"
+                    }
+                ]
+            },
+            "Coal Winning": {
+                "Daily": [
+                    {
+                        "source_sheet": "Pivot Dashboard",
+                        "source_cell": "J58",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "I2"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Pivot Dashboard",
+                        "source_cell": "K58",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "J2"
+                    }
+                ]
+            }
+        }
+    },
+    "TCM": {
+        "TCM HCV LS": {
+            "FC Production": {
+                "Daily": [
+                    {
+                        "source_sheet": "Summary TCM",
+                        "source_cell": "E51",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "E7"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Summary TCM",
+                        "source_cell": "H51",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "F7"
+                    }
+                ]
+            },
+            "Port Stock Yard": {
+                "Daily": [
+                    {
+                        "source_sheet": "Summary TCM",
+                        "source_cell": "E100",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "G7"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Summary TCM",
+                        "source_cell": "E100",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "H7"
+                    }
+                ]
+            },
+            "Coal Winning": {
+                "Daily": [
+                    {
+                        "source_sheet": "Dashboard TCM",
+                        "source_cell": "H84",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "I7"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard TCM",
+                        "source_cell": "H82",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "J7"
+                    }
+                ]
+            },
+            "ROM Stock": {
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard TCM",
+                        "source_cell": "R33",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "K7"
+                    }
+                ]
+            }
+        },
+        "TCM HCV HS": {
+            "FC Production": {
+                "Daily": [
+                    {
+                        "source_sheet": "Summary TCM",
+                        "source_cell": "E55",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "E8"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Summary TCM",
+                        "source_cell": "H55",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "F8"
+                    }
+                ]
+            },
+            "Port Stock Yard": {
+                "Daily": [
+                    {
+                        "source_sheet": "Summary TCM",
+                        "source_cell": "E101",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "G8"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Summary TCM",
+                        "source_cell": "E101",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "H8"
+                    }
+                ]
+            },
+            "Coal Winning": {
+                "Daily": [
+                    {
+                        "source_sheet": "Dashboard TCM",
+                        "source_cell": "H84",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "I7"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard TCM",
+                        "source_cell": "H82",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "J7"
+                    }
+                ]
+            }
+        },
+        "TCM HCV MS": {
+            "FC Production": {
+                "Daily": [
+                    {
+                        "source_sheet": "Summary TCM",
+                        "source_cell": "E59",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "E9"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Summary TCM",
+                        "source_cell": "H59",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "F9"
+                    }
+                ]
+            },
+            "Port Stock Yard": {
+                "Daily": [
+                    {
+                        "source_sheet": "Summary TCM",
+                        "source_cell": "E102",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "G9"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Summary TCM",
+                        "source_cell": "E102",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "H9"
+                    }
+                ]
+            },
+            "Coal Winning": {
+                "Daily": [
+                    {
+                        "source_sheet": "Dashboard TCM",
+                        "source_cell": "H84",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "I7"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard TCM",
+                        "source_cell": "H82",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "J7"
+                    }
+                ]
+            }
+        }
+    },
+    "BEK": {
+        "BEK HCV LS": {
+            "FC Production": {
+                "Daily": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "D28",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "E10"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "E28",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "F10"
+                    }
+                ]
+            },
+            "FC Stock Yard": {
+                "Daily": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "D49",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "G10"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "D49",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "H10"
+                    }
+                ]
+            },
+            "Coal Winning": {
+                "Daily": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "R17",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "I10"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "S17",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "J10"
+                    }
+                ]
+            },
+            "ROM Stock": {
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "J16",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "K10"
+                    }
+                ]
+            }
+        },
+        "BEK HCV HS": {
+            "FC Production": {
+                "Daily": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "D29",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "E11"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "E29",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "F11"
+                    }
+                ]
+            },
+            "FC Stock Yard": {
+                "Daily": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "D50",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "G11"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "D50",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "H11"
+                    }
+                ]
+            },
+            "Coal Winning": {
+                "Daily": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "R18",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "I11"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "S18",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "J11"
+                    }
+                ]
+            }
+        },
+        "BEK MCV LS": {
+            "FC Production": {
+                "Daily": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "D30",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "E12"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "E30",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "F12"
+                    }
+                ]
+            },
+            "FC Stock Yard": {
+                "Daily": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "D51",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "G12"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "D51",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "H12"
+                    }
+                ]
+            },
+            "Coal Winning": {
+                "Daily": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "R19",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "I12"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "S19",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "J12"
+                    }
+                ]
+            },
+            "ROM Stock": {
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "J13",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "K12"
+                    }
+                ]
+            }
+        }
+    },
+    "GPK": {
+        "GPK": {
+            "FC Production": {
+                "Daily": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "E20",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "E13"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "G20",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "F13"
+                    }
+                ]
+            },
+            "Port Stock Yard": {
+                "Daily": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "E26",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "G13"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "G26",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "H13"
+                    }
+                ]
+            },
+            "Coal Winning": {
+                "Daily": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "E14",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "I13"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "G14",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "J13"
+                    }
+                ]
+            },
+            "ROM Stock": {
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "G24",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "K13"
+                    }
+                ]
+            }
+        }
+    },
+    "JBG": {
+        "JBG": {
+            "FC Production": {
+                "Daily": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "E17",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "E14"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "G17",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "F14"
+                    }
+                ]
+            },
+            "Port Stock Yard": {
+                "Daily": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "F24",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "G14"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "H24",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "H14"
+                    }
+                ]
+            },
+            "Coal Winning": {
+                "Daily": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "E13",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "I14"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "G13",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "J14"
+                    }
+                ]
+            },
+            "ROM Stock": {
+                "MTD": [
+                    {
+                        "source_sheet": "Dashboard",
+                        "source_cell": "G21",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "K14"
+                    }
+                ]
+            }
+        }
+    },
+    "TIS": {
+        "TIS": {
+            "FC Production": {
+                "Daily": [
+                    {
+                        "source_sheet": "Summary TIS",
+                        "source_cell": "D21",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "E15"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Summary TIS",
+                        "source_cell": "G21",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "F15"
+                    }
+                ]
+            },
+            "Port Stock Yard": {
+                "Daily": [
+                    {
+                        "source_sheet": "Summary TIS",
+                        "source_cell": "D51",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "G15"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Summary TIS",
+                        "source_cell": "D51",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "H15"
+                    }
+                ]
+            },
+            "Coal Winning": {
+                "Daily": [
+                    {
+                        "source_sheet": "Summary TIS",
+                        "source_cell": "D12",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "I15"
+                    }
+                ],
+                "MTD": [
+                    {
+                        "source_sheet": "Summary TIS",
+                        "source_cell": "G12",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "J15"
+                    }
+                ]
+            },
+            "ROM Stock": {
+                "MTD": [
+                    {
+                        "source_sheet": "Summary TIS",
+                        "source_cell": "D43",
+                        "target_sheet": "Daily Production Report",
+                        "target_cell": "K15"
+                    }
+                ]
+            }
+        }
+    },
+    "This_Month": "Jan",
+    "Pro_Outlook_Sheet_Name": "Outlook 7 Sep 2026",
+    "this_Day": 11
+}
