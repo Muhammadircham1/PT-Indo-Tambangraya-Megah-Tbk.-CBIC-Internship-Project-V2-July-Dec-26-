@@ -3,6 +3,9 @@
 Repositori ini berisi kumpulan dokumen, *handbook*, teori, dan *progress report* yang digunakan serta dikembangkan selama Masa Magang Tahun 2026. 
 Seluruh dokumentasi disusun untuk mendukung pemahaman proses bisnis, sistem automasi, serta pelaporan kegiatan magang secara terstruktur.
 
+*untuk mengakses Repository yang dikembangkan oleh Hasyim Mu'arifin & Resma Yunita. kamu dapat mengakses link berikut
+https://github.com/Hasyimmuarifin/ITMG-Internship-All-Project-2025
+
 ---
 
 ## 📂 Struktur Repositori Kode
