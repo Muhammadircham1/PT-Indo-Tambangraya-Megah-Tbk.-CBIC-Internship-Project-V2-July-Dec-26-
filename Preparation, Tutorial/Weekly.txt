@@ -1,0 +1,24 @@
+Weekly
+
+juli 900 , 50
+Agustus 1028 , 46
+September 1156, 37
+October 1284, 48
+
+cek pen demur (boct)
+di pen dem paling Bawah
+kolom dem paling atas
+kolom pen paling atas
+
+cek pen demur (boct)
+di pen dem paling Bawah
+kolom dem Bawah boct
+kolom pen Bawah boct
+
+if
+kalo udah masuk week 4 tambahkan satu bulan lagi 
+
+subj
+Summary Shipment 15 July 2026
+
+untuk isi otomisasi weekly sesuaikan dengan jumlah bulan di itm summary

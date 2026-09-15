@@ -1,0 +1,31 @@
+SSO
+
+5300 = KBM, IKJ, DMP, HWA, GIE
+4000 = KPM, MKE
+5000 - BBA, DJA
+7500 = LAINNYA, GAM
+
+3pc
+Setup Desktop :
+
+satu tab kiri (Input)
+dua tab kanan (atas rumus) + (Bawah File fcqm raw)
+hp kalku
+	
+yang nggak di crushing (produk gaada di foto yang dikirim) langsung dibagi aja
+DMP diambil DMP.LCV (Tonase)
+GAM lgsg dibagi
+EBH PAKE EBH.HCV
+gnakan MBL di foto yang dikirimpak eric di cbic untuk isi mbl.56, mbl yang asli pasti 0
+
+Bulan berjalan (tonase-foto pak eric) : rumus)
+Bulan setelah berjalan (tonase : rumus)
+
+bulan ini juli
+agustus September oktober gausah dikurang digambar
+
+FC-QM  Raw
+bulan berjalan : isi Owncoal Sesuai File
+		 3PC juga diisi
+Bulan Berikutnya : isi Owncoal Sesuai File
+		   3PC pake bulan Berjalan
