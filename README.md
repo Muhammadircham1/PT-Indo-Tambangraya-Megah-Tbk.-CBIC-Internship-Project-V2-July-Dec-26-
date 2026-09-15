@@ -6,19 +6,21 @@ Seluruh dokumentasi disusun untuk mendukung pemahaman proses bisnis, sistem auto
 *untuk mengakses Repository yang dikembangkan oleh Hasyim Mu'arifin & Resma Yunita. kamu dapat mengakses link berikut
 https://github.com/Hasyimmuarifin/ITMG-Internship-All-Project-2025
 
+
+
 ---
 
 ## 📂 Struktur Repositori Kode
 
-Berdasarkan struktur *file* di repositori ini, berikut adalah daftar direktori utama dan *sub-module* terkait pengembangan *dashboard* dan automasi data:
+berikut merupakan *file* di repositori ini yang digunakan sebagai media utama dalam keperluan jobdesk Magang pada divisi **CBIC** , berikut adalah daftar direktori utama dan *sub-module* terkait pengembangan *dashboard* dan automasi data:
 
 *   📁 **`Dashboard FC Production 2025 2026`** – *File* pengembangan dan visualisasi terkait pelaporan target produksi.
 *   📁 **`Dashboard_Logistic_Performance_Outlook-2026`** – *File* analitik dan *dashboard* untuk memantau performa logistik.
 *   📁 **`Preparation, Tutorial`** – Kumpulan *script* latihan, referensi teknis, dan modul persiapan magang.
-*   📁 **`SystemAutomation_MonthlyMargin`** – Direktori *script* untuk automasi rekapitulasi dan perhitungan margin bulanan.
-*   🔗 **`SystemAutomation_SSOtoSummary`** – *Sub-module* (repositori terpisah) untuk *script* utama penarikan data mentah SSO ke *summary*.
-*   🔗 **`SystemAutomation_WeeklyReport`** – *Sub-module* untuk automasi pembuatan laporan mingguan.
-*   🔗 **`automation-daily-production-report`** – *Sub-module* untuk sistem automasi pelaporan produksi harian.
+*   📁 **`SystemAutomation_MonthlyMargin`** – Direktori *File** untuk automasi rekapitulasi dan perhitungan margin bulanan.
+*   📁 **`SystemAutomation_SSOtoSummary`** – *File** (repositori terpisah) untuk *script* utama penarikan data mentah SSO ke *summary*.
+*   📁 **`SystemAutomation_WeeklyReport`** – *File** untuk automasi pembuatan laporan mingguan.
+*   📁 **`automation-daily-production-report`** – *File** untuk sistem automasi pelaporan produksi harian.
 
 *(Catatan: Commit terakhir untuk seluruh modul di atas adalah versi update Juli - 15 Sep)*
 
